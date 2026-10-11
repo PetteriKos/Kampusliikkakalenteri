@@ -1,0 +1,384 @@
+/* Kampusliikkakalenteri – yhteinen tyylitiedosto
+   Vaihda fontti tai värit alla olevista muuttujista. */
+
+:root {
+  --fontti: "Segoe UI", Arial, Helvetica, sans-serif;
+  --teksti: #1a1a1a;
+  --tausta: #ffffff;
+
+  /* Sininen teema (etusivu) */
+  --sininen: #0b5cab;
+  --sininen-tumma: #08437d;
+  --sininen-vaalea: #e6f0fa;
+
+  /* Keltainen teema (kalenteri ja tapahtumasivut) */
+  --keltainen: #ffd23f;
+  --keltainen-tumma: #e0b000;
+  --keltainen-vaalea: #fff6d1;
+
+  /* Oletusarvo = keltainen teema */
+  --teema: var(--keltainen);
+  --teema-tumma: var(--keltainen-tumma);
+  --teema-vaalea: var(--keltainen-vaalea);
+  --teema-teksti: var(--teksti);
+}
+
+body.teema-sininen {
+  --teema: var(--sininen);
+  --teema-tumma: var(--sininen-tumma);
+  --teema-vaalea: var(--sininen-vaalea);
+  --teema-teksti: #ffffff;
+}
+
+/* ---------- Perusasetukset ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fontti);
+  line-height: 1.6;
+  color: var(--teksti);
+  background: var(--tausta);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1,
+h2 {
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+p,
+ul,
+dl {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: var(--sininen-tumma);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--teksti);
+  outline-offset: 3px;
+}
+
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- Ylätunniste ja navigaatio ---------- */
+
+.sivuston-ylaosa {
+  position: relative;
+  z-index: 2;
+  background: var(--teema);
+  color: var(--teema-teksti);
+}
+
+.sivuston-ylaosa-sisus {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+}
+
+.sivuston-nimi {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.logo {
+  width: auto;
+  height: 3rem;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 2px #ffffff);
+}
+
+.paanavigaatio ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.paanavigaatio a {
+  display: inline-block;
+  padding: 0.35rem 0.25rem;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+
+.paanavigaatio a:hover {
+  border-bottom-color: currentColor;
+}
+
+.paanavigaatio a[aria-current="page"] {
+  border-bottom-color: currentColor;
+}
+
+body.teema-sininen a:focus-visible,
+body.teema-sininen .sivuston-ylaosa a:focus-visible {
+  outline-color: #ffffff;
+}
+
+/* ---------- Sisältö ---------- */
+
+main {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2.5rem;
+}
+
+.johdanto {
+  max-width: 40rem;
+}
+
+/* Painikkeet (linkit, jotka näyttävät painikkeilta) */
+
+.painike {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--teema-teksti);
+  background: var(--teema);
+  border: 2px solid var(--teema-tumma);
+  border-radius: 0.4rem;
+}
+
+.painike:hover {
+  background: var(--teema-tumma);
+  color: #ffffff;
+}
+
+.painike-toissijainen {
+  background: #ffffff;
+  color: var(--teksti);
+  border-color: var(--teksti);
+}
+
+.painike-toissijainen:hover {
+  background: var(--teksti);
+  color: #ffffff;
+}
+
+.painikeryhma {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* ---------- Etusivu ---------- */
+
+.esittely {
+  background: var(--sininen-vaalea);
+  border-left: 0.5rem solid var(--sininen);
+  padding: 1.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Koko etusivun alue toimii linkkinä kalenteriin */
+.esittely .painike::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------- Kalenteri ---------- */
+
+.kalenteri-kehys {
+  overflow-x: auto;
+}
+
+.kalenteri {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.kalenteri caption {
+  text-align: left;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0 0 0.75rem;
+}
+
+.kalenteri th,
+.kalenteri td {
+  border: 2px solid var(--teksti);
+  padding: 0.25rem;
+  vertical-align: top;
+  height: 4.5rem;
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+}
+
+.kalenteri thead th {
+  height: auto;
+  background: var(--teema);
+  color: var(--teema-teksti);
+  padding: 0.5rem 0.25rem;
+  font-size: 0.95rem;
+}
+
+.kalenteri .paiva {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+
+.kalenteri .tyhja {
+  background: #f1f1f1;
+}
+
+.kalenteri .viikonloppu {
+  background: var(--teema-vaalea);
+}
+
+.kalenteri .tapahtuma {
+  display: block;
+  background: var(--teema);
+  color: var(--teema-teksti);
+  font-weight: 600;
+  padding: 0.15rem 0.3rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  line-height: 1.3;
+}
+
+.kalenteri .tapahtuma:hover {
+  background: var(--teema-tumma);
+  color: #ffffff;
+}
+
+/* ---------- Tapahtumasivut ---------- */
+
+.tapahtuman-kuva {
+  margin: 0 0 1.5rem;
+}
+
+.tapahtuman-kuva svg,
+.tapahtuman-kuva img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.4rem;
+}
+
+.tapahtuman-kuva figcaption {
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.perustiedot {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.4rem 1rem;
+  background: var(--keltainen-vaalea);
+  border-left: 0.5rem solid var(--keltainen);
+  padding: 1rem 1.25rem;
+  border-radius: 0.25rem;
+}
+
+.perustiedot dt {
+  font-weight: 700;
+}
+
+.perustiedot dd {
+  margin: 0;
+}
+
+/* ---------- Alatunniste ---------- */
+
+.sivuston-alaosa {
+  background: var(--teema-vaalea);
+  border-top: 4px solid var(--teema);
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.sivuston-alaosa p {
+  margin: 0;
+}
+
+/* ---------- Responsiivisuus ---------- */
+
+@media (max-width: 40rem) {
+  .sivuston-ylaosa-sisus {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .kalenteri th,
+  .kalenteri td {
+    height: 3.5rem;
+    font-size: 0.7rem;
+    padding: 0.15rem;
+  }
+
+  .kalenteri thead th {
+    font-size: 0.8rem;
+  }
+
+  .perustiedot {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .perustiedot dd {
+    margin-bottom: 0.6rem;
+  }
+
+  .painike {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
